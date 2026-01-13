@@ -5,6 +5,8 @@ import type { Player, Team, TransferPlan, Transfer, Fixture } from "@/types/fpl"
 import { Settings2, TrendingUp, ArrowRightLeft, Info, Target, AlertTriangle, Sparkles, RefreshCw, Bot } from "lucide-react";
 import TransferCard from "./TransferCard";
 import { formatPrice, getPositionName } from "@/lib/utils";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface TransferPlannerProps {
   teamPlayers: Player[];
@@ -380,10 +382,23 @@ export default function TransferPlanner({
             </div>
 
             <div className="bg-gradient-to-br from-green-900/20 to-slate-900 border border-green-500/30 rounded-xl p-6">
-              <div className="prose prose-invert prose-sm max-w-none">
-                <div className="whitespace-pre-line text-gray-300 leading-relaxed">
+              <div className="prose prose-invert prose-sm max-w-none text-gray-300 leading-relaxed">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({node, ...props}) => <h1 className="text-lg font-bold mt-4 mb-2 text-gray-200" {...props} />,
+                    h2: ({node, ...props}) => <h2 className="text-base font-bold mt-3 mb-2 text-gray-200" {...props} />,
+                    h3: ({node, ...props}) => <h3 className="text-sm font-semibold mt-3 mb-1 text-gray-300" {...props} />,
+                    p: ({node, ...props}) => <p className="mb-2 text-gray-300" {...props} />,
+                    ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 space-y-1 text-gray-300" {...props} />,
+                    ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 space-y-1 text-gray-300" {...props} />,
+                    li: ({node, ...props}) => <li className="text-gray-300" {...props} />,
+                    strong: ({node, ...props}) => <strong className="font-semibold text-gray-200" {...props} />,
+                    em: ({node, ...props}) => <em className="italic text-gray-300" {...props} />,
+                  }}
+                >
                   {aiStrategy}
-                </div>
+                </ReactMarkdown>
               </div>
             </div>
           </div>

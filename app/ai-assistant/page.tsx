@@ -5,6 +5,8 @@ import { useTeamStore } from "@/store/teamStore";
 import { useFPLCore } from "@/hooks/useFPLData";
 import { Bot, Send, User, ArrowLeft, Loader2, Sparkles, Trash2 } from "lucide-react";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Message {
   id: string;
@@ -75,8 +77,8 @@ export default function AIAssistantPage() {
 
       const data = await response.json();
 
-      if (data.error) {
-        throw new Error(data.error);
+      if (!response.ok || data.error) {
+        throw new Error(data.error || "Failed to get response from server");
       }
 
       const assistantMessage: Message = {
@@ -211,9 +213,32 @@ export default function AIAssistantPage() {
                       : "bg-slate-800 text-gray-200"
                   }`}
                 >
-                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                    {message.content}
-                  </div>
+                  {message.role === "assistant" ? (
+                    <div className="prose prose-invert prose-sm max-w-none text-sm leading-relaxed">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          h1: ({node, ...props}) => <h1 className="text-lg font-bold mt-4 mb-2 text-gray-200" {...props} />,
+                          h2: ({node, ...props}) => <h2 className="text-base font-bold mt-3 mb-2 text-gray-200" {...props} />,
+                          h3: ({node, ...props}) => <h3 className="text-sm font-semibold mt-3 mb-1 text-gray-300" {...props} />,
+                          p: ({node, ...props}) => <p className="mb-2 text-gray-200" {...props} />,
+                          ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 space-y-1 text-gray-200" {...props} />,
+                          ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 space-y-1 text-gray-200" {...props} />,
+                          li: ({node, ...props}) => <li className="text-gray-200" {...props} />,
+                          strong: ({node, ...props}) => <strong className="font-semibold text-gray-100" {...props} />,
+                          em: ({node, ...props}) => <em className="italic text-gray-300" {...props} />,
+                          code: ({node, ...props}) => <code className="bg-slate-700 px-1 py-0.5 rounded text-xs text-gray-200" {...props} />,
+                          blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-green-500 pl-3 italic text-gray-300 my-2" {...props} />,
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                      {message.content}
+                    </div>
+                  )}
                   <div
                     className={`text-xs mt-2 ${
                       message.role === "user" ? "text-green-200" : "text-gray-500"
@@ -278,7 +303,7 @@ export default function AIAssistantPage() {
             </button>
           </div>
           <p className="text-xs text-gray-600 text-center mt-2">
-            Powered by GPT-4. Responses are AI-generated and may not always be accurate.
+            Powered by Groq AI. Responses are AI-generated and may not always be accurate.
           </p>
         </form>
       </div>

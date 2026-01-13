@@ -155,7 +155,7 @@ function DashboardContent() {
 
               <p className="text-gray-400 mb-8 max-w-md mx-auto">
                 Get personalized transfer advice, captain picks, and strategy recommendations
-                powered by GPT-4. Your team data is automatically included for context-aware suggestions.
+                powered by Groq AI. Your team data is automatically included for context-aware suggestions.
               </p>
 
               {/* Features */}
@@ -183,7 +183,7 @@ function DashboardContent() {
               </Link>
 
               <p className="text-xs text-gray-600 mt-4">
-                Powered by OpenAI GPT-4
+                Powered by Groq AI
               </p>
             </div>
 

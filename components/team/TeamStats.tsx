@@ -5,6 +5,8 @@ import type { Player, Team, Fixture } from "@/types/fpl";
 import { TrendingUp, Wallet, Target, Brain, Sparkles, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface TeamStatsProps {
   players: Player[];
@@ -162,8 +164,23 @@ export default function TeamStats({
             ) : (
               <div className="space-y-3">
                 <div className="bg-slate-800/50 rounded-lg p-4 max-h-64 overflow-y-auto">
-                  <div className="whitespace-pre-line text-sm text-gray-300 leading-relaxed">
-                    {aiAnalysis}
+                  <div className="prose prose-invert prose-sm max-w-none text-sm text-gray-300 leading-relaxed">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        h1: ({node, ...props}) => <h1 className="text-lg font-bold mt-3 mb-2 text-gray-200" {...props} />,
+                        h2: ({node, ...props}) => <h2 className="text-base font-bold mt-3 mb-2 text-gray-200" {...props} />,
+                        h3: ({node, ...props}) => <h3 className="text-sm font-semibold mt-2 mb-1 text-gray-300" {...props} />,
+                        p: ({node, ...props}) => <p className="mb-2 text-gray-300" {...props} />,
+                        ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 space-y-1 text-gray-300" {...props} />,
+                        ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 space-y-1 text-gray-300" {...props} />,
+                        li: ({node, ...props}) => <li className="text-gray-300" {...props} />,
+                        strong: ({node, ...props}) => <strong className="font-semibold text-gray-200" {...props} />,
+                        em: ({node, ...props}) => <em className="italic text-gray-300" {...props} />,
+                      }}
+                    >
+                      {aiAnalysis}
+                    </ReactMarkdown>
                   </div>
                 </div>
                 <button
@@ -228,8 +245,23 @@ export default function TeamStats({
             ) : (
               <div className="space-y-3">
                 <div className="bg-slate-800/50 rounded-lg p-4 max-h-64 overflow-y-auto">
-                  <div className="whitespace-pre-line text-sm text-gray-300 leading-relaxed">
-                    {lineupSuggestion}
+                  <div className="prose prose-invert prose-sm max-w-none text-sm text-gray-300 leading-relaxed">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        h1: ({node, ...props}) => <h1 className="text-lg font-bold mt-3 mb-2 text-gray-200" {...props} />,
+                        h2: ({node, ...props}) => <h2 className="text-base font-bold mt-3 mb-2 text-gray-200" {...props} />,
+                        h3: ({node, ...props}) => <h3 className="text-sm font-semibold mt-2 mb-1 text-gray-300" {...props} />,
+                        p: ({node, ...props}) => <p className="mb-2 text-gray-300" {...props} />,
+                        ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 space-y-1 text-gray-300" {...props} />,
+                        ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 space-y-1 text-gray-300" {...props} />,
+                        li: ({node, ...props}) => <li className="text-gray-300" {...props} />,
+                        strong: ({node, ...props}) => <strong className="font-semibold text-gray-200" {...props} />,
+                        em: ({node, ...props}) => <em className="italic text-gray-300" {...props} />,
+                      }}
+                    >
+                      {lineupSuggestion}
+                    </ReactMarkdown>
                   </div>
                 </div>
                 <button

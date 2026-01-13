@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 10%;
+    --foreground: 0 0% 95%;
+    --card: 220 20% 13%;
+    --card-foreground: 0 0% 95%;
+    --popover: 220 20% 13%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 220 20% 10%;
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 10% 60%;
+    --accent: 142 71% 45%;
+    --accent-foreground: 220 20% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 220 20% 20%;
+    --input: 220 20% 18%;
+    --ring: 142 71% 45%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(74, 222, 128, 0.5);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+/* Pitch background */
+.pitch-gradient {
+  background: linear-gradient(180deg,
+    #1a472a 0%,
+    #2d5a3d 20%,
+    #1a472a 40%,
+    #2d5a3d 60%,
+    #1a472a 80%,
+    #2d5a3d 100%
+  );
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Green glow button */
+.btn-glow {
+  @apply bg-green-500 text-gray-900 font-semibold;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-glow:hover {
+  @apply bg-green-400;
+  box-shadow: 0 0 30px rgba(74, 222, 128, 0.6);
+}
+
+/* Card hover */
+.card-hover {
+  @apply transition-all duration-300;
+}
+
+.card-hover:hover {
+  @apply border-green-500/50;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.1);
+}
+
+/* Position badge colors */
+.badge-gk {
+  @apply bg-yellow-500 text-gray-900;
+}
+
+.badge-def {
+  @apply bg-blue-500 text-white;
+}
+
+.badge-mid {
+  @apply bg-green-500 text-gray-900;
+}
+
+.badge-fwd {
+  @apply bg-red-500 text-white;
+}
+
+/* Player card on pitch */
+.player-card {
+  @apply bg-slate-800/90 border border-slate-600 rounded-lg p-2 text-center min-w-[80px];
+  backdrop-filter: blur(4px);
+}
+
+.player-card.captain {
+  @apply border-yellow-500 ring-2 ring-yellow-500/50;
+}
+
+.player-card.vice-captain {
+  @apply border-gray-400 ring-2 ring-gray-400/50;
+}
+
+/* Transfer card */
+.transfer-card {
+  @apply bg-slate-800 border border-slate-700 rounded-xl p-4;
+  transition: all 0.3s ease;
+}
+
+.transfer-card:hover {
+  @apply border-green-500/50;
+  box-shadow: 0 4px 20px rgba(74, 222, 128, 0.15);
+}
+
+/* Metric bar */
+.metric-bar {
+  @apply h-2 rounded-full bg-slate-700 overflow-hidden;
+}
+
+.metric-bar-fill {
+  @apply h-full rounded-full transition-all duration-500;
+}
+
+/* Tab styles */
+.tab-button {
+  @apply px-6 py-3 rounded-lg font-medium transition-all duration-200;
+}
+
+.tab-button.active {
+  @apply bg-green-500 text-gray-900;
+}
+
+.tab-button:not(.active) {
+  @apply bg-slate-800 text-gray-400 hover:text-white hover:bg-slate-700;
+}
